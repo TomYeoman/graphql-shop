@@ -1,14 +1,17 @@
 # Client facing types, mutations etc
 
-type User {
-  id: ID!
+# We must define shape of data as we're staticly typed
+type Dog {
   name: String!
 }
 
 type Mutation {
-  hi: String
+  createDog(name: String!): Dog
 }
 
+# For every query, we must have a resolver!
 type Query {
-  hi: String
+  # ! means no items can be mull
+  dogs: [Dog]!
+  globalDogs: [Dog]!
 }
