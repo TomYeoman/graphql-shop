@@ -1,0 +1,32 @@
+[
+	{
+		"path": "$ROOTPATH$\\src\\db.js",
+		"bookmarks": [
+			{
+				"line": 4,
+				"column": 0,
+				"label": "Setup our prisma server"
+			}
+		]
+	},
+	{
+		"path": "$ROOTPATH$\\src\\createServer.js",
+		"bookmarks": [
+			{
+				"line": 10,
+				"column": 0,
+				"label": "#2 ) Link our graphql yoga server to our prisma instance"
+			}
+		]
+	},
+	{
+		"path": "$ROOTPATH$\\src\\index.js",
+		"bookmarks": [
+			{
+				"line": 0,
+				"column": 0,
+				"label": "Startup the graphql yoga server"
+			}
+		]
+	}
+]

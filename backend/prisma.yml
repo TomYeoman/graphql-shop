@@ -1,2 +1,10 @@
-endpoint: https://eu1.prisma.sh/tom-yeoman-cab2cf/sick-fits/dev
+endpoint: ${env:PRISMA_ENDPOINT}
 datamodel: datamodel.prisma
+# We can uncomment this during devepment to run unsecurely whilst developing
+# secret: ${env:PRISMA_SECRET}
+
+hooks:
+  post-deploy:
+    - graphql get-schema p prisma
+
+# In order to deploy `prisma deploy --env-file variables.env`
