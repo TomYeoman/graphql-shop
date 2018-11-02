@@ -1,5 +1,5 @@
 endpoint: ${env:PRISMA_ENDPOINT}
-datamodel: datamodel.prisma
+datamodel: datamodel.graphql
 # We can uncomment this during devepment to run unsecurely whilst developing
 # secret: ${env:PRISMA_SECRET}
 

@@ -1,17 +1,42 @@
+#import * from './generated/prisma.graphql';
+
 # Client facing types, mutations etc
 
 # We must define shape of data as we're staticly typed
+
+############################
+# TYPES ####################
+############################
+
 type Dog {
   name: String!
 }
 
+############################
+# MUTATIONS ################
+############################
+
 type Mutation {
   createDog(name: String!): Dog
+  createItem(
+    title: String
+    description: String
+    price: Int
+    image: String
+    largeImage: String
+    user: String
+  ): Item!
 }
+
+############################
+# QUERIES   ################
+############################
 
 # For every query, we must have a resolver!
 type Query {
   # ! means no items can be mull
-  dogs: [Dog]!
-  globalDogs: [Dog]!
+  fetchDogs: [Dog]!
+  fetchGlobalDogs: [Dog]!
+  fetchItems: [Item]!
+  items: [Item]!
 }

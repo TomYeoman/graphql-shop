@@ -1,21 +1,34 @@
+const { forwardTo } = require("prisma-binding");
+
+console.log(forwardTo)
+
 const Query = {
-    /**
-     * This can retrieve from anywhere, rest API, locally, or in our case prisma
-     * @param {*} parent 
-     * @param {*} args 
-     * @param {*} context - Do we need headers, cookies etc? also covers DB
-     * @param {*} info - 
-     */
-    dogs(parent, args, context, info) {
-        return [
-            {name : 'Sam'},
-            {name : 'Archie'},
-            {name : 'Charlie'},
-        ]
-    },
-    globalDogs(parent, args, context, info) {
-        return global.dogs || []
-    }
+  /**###########################
+    # LOCAL       ##############
+    ############################ */
+    
+  fetchDogs(parent, args, context, info) {
+    return [{ name: "Sam" }, { name: "Archie" }, { name: "Charlie" }];
+  },
+  fetchGlobalDogs(parent, args, context, info) {
+    return global.dogs || [];
+  },
+
+  /**###########################
+    # PRISMA       #############
+    ############################ */
+
+  async fetchItems(parent, args, context, info) {
+    const item = await context.db.query.items(
+      {
+        data: { ...args }
+      },
+      info
+    );
+
+    return item;
+  },
+  items: forwardTo('db'),
 };
 
 module.exports = Query;
