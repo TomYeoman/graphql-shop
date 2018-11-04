@@ -53,7 +53,6 @@ const darkTheme = {
 
 const Inner = styled.div`
   max-width: ${props => props.theme.maxWidth};
-  background-color: pink;
 `;
 
 const StyledPage = styled.div`
