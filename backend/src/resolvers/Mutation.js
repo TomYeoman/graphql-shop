@@ -1,3 +1,5 @@
+const { forwardTo } = require("prisma-binding");
+
 const Mutations = {
 
     /**###########################
@@ -23,7 +25,6 @@ const Mutations = {
     # PRISMA       #############
     ############################ */
 
-    
     async createItem(parent, args, context, info) {
 
         // TODO - Check if logged in
@@ -33,7 +34,9 @@ const Mutations = {
         }, info);
         
         return item;
-    }
+    },
+    deleteItem: forwardTo('db'),
+
 };
 
 module.exports = Mutations;

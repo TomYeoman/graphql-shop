@@ -4,6 +4,8 @@ import Link from "next/link";
 import Title from "./styles/Title";
 import ItemStyles from "./styles/ItemStyles";
 import PriceTag from "./styles/PriceTag";
+// Lib
+import formatPrice from '../lib/formatMoney';
 
 export default class Item extends Component {
   static propTypes = {
@@ -17,6 +19,8 @@ export default class Item extends Component {
     const { item } = this.props;
     return (
       <ItemStyles>
+        {item.image && <img src={item.image} alt={item.title} /> }
+        {/* Title   */}
         <Title>
           {/* This is next way to pass a querystring */}
           <Link
@@ -28,8 +32,28 @@ export default class Item extends Component {
             <a>{item.title}</a>
           </Link>
         </Title>
-        <PriceTag>{item.price}</PriceTag>
+
+        {/* Price */}
+        <PriceTag>{formatPrice(item.price)}</PriceTag>
+            
+        {/* Description */}
         <p>{item.description}</p>
+
+        {/* Buttons */}
+
+        <div className="buttonList">
+            <Link
+                href={{
+                pathname: "/update",
+                query: { id: item.id }
+                }}
+            >
+            <a>Edit</a>
+          </Link>
+            <button>Add to card</button>
+            <button>Delete</button>
+        </div>
+
       </ItemStyles>
     );
   }

@@ -12,20 +12,24 @@ const ALL_ITEMS_QUERY = gql`
       id
       title
       price
+      description
+      image
     }
   }
 `;
 
+
 const Center = styled.div`
   text-align: center;
-`
+`;
+
 const ItemsList = styled.div`
-  display :grid;
-  grid-template-columns :  1fr 1fr;
-  grid-gap : 60px;
-  max-width : ${props => props.theme.maxWidth}
-  margin : 0 auto;
-`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 60px;
+  max-width: ${props => props.theme.maxWidth};
+  margin: 0 auto;
+`;
 
 export default class Items extends Component {
   render() {
@@ -46,3 +50,5 @@ export default class Items extends Component {
     );
   }
 }
+
+export {ALL_ITEMS_QUERY}

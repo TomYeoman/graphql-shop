@@ -26,6 +26,7 @@ type Mutation {
     largeImage: String
     user: String
   ): Item!
+  deleteItem(ID: ID): Item!
 }
 
 ############################

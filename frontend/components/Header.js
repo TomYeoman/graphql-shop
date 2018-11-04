@@ -1,24 +1,21 @@
-import React, { Component } from "react";
-import Nav from "./Nav";
-import Link from "next/link";
-import styled from "styled-components";
-import Router from 'next/router';
+import Link from 'next/link';
+import styled from 'styled-components';
 import NProgress from 'nprogress';
+import Router from 'next/router';
+import Nav from './Nav';
+// import Cart from './Cart';
+// import Search from './Search';
 
 Router.onRouteChangeStart = () => {
-  console.log('onRouteChangeStart')
   NProgress.start();
-
-}
-Router.onRouteChangeError = () => {
-  console.log('onRouteChangeError')
-  NProgress.done();
-}
+};
 Router.onRouteChangeComplete = () => {
-  console.log('onRouteChangeComplete')
   NProgress.done();
-}
+};
 
+Router.onRouteChangeError = () => {
+  NProgress.done();
+};
 
 const Logo = styled.h1`
   font-size: 4rem;
@@ -26,17 +23,16 @@ const Logo = styled.h1`
   position: relative;
   z-index: 2;
   transform: skew(-7deg);
-  color : #fff;
   a {
-    background-color: ${props => props.theme.red};
     padding: 0.5rem 1rem;
-    color : white;
-    text-transform : uppercase;
-    text-decoration : none;
+    background: ${props => props.theme.red};
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
   }
-  @media ( max-width: 1300px) {
-    margin: 0px;
-    text-align:center;
+  @media (max-width: 1300px) {
+    margin: 0;
+    text-align: center;
   }
 `;
 
@@ -59,23 +55,23 @@ const StyledHeader = styled.header`
   }
 `;
 
-export default class Header extends Component {
-  render() {
-    return (
-      <StyledHeader>
-        <div className="bar">
-          <Logo>
-            <Link href="">
-              <a>Sick Fits</a>
-            </Link>
-          </Logo>
-          <Nav />
-        </div>
-        <div className="sub-bar">
-          <p>Search</p>
-        </div>
-        <div>Card</div>
-      </StyledHeader>
-    );
-  }
-}
+const Header = () => (
+  <StyledHeader>
+    <div className="bar">
+      <Logo>
+        <Link href="/">
+          <a>Sick Fits</a>
+        </Link>
+      </Logo>
+      <Nav />
+    </div>
+    <div className="sub-bar">
+      {/* <Search /> */}
+      Search
+    </div>
+    {/* <Cart /> */}
+    Cart
+  </StyledHeader>
+);
+
+export default Header;
