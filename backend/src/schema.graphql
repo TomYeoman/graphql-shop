@@ -26,7 +26,8 @@ type Mutation {
     largeImage: String
     user: String
   ): Item!
-  deleteItem(ID: ID): Item!
+  updateItem(id: ID!, title: String, description: String, price: Int): Item!
+  deleteItem(where: ItemWhereUniqueInput!): Item
 }
 
 ############################
@@ -35,9 +36,11 @@ type Mutation {
 
 # For every query, we must have a resolver!
 type Query {
-  # ! means no items can be mull
+  # DEMO
   fetchDogs: [Dog]!
   fetchGlobalDogs: [Dog]!
   fetchItems: [Item]!
+  # ITEMS
   items: [Item]!
+  item(where: ItemWhereUniqueInput!): Item
 }

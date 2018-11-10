@@ -29,6 +29,7 @@ const Query = {
     return item;
   },
   items: forwardTo('db'),
+  item: forwardTo('db'),
 };
 
 module.exports = Query;
