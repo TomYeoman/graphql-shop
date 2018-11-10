@@ -30,7 +30,7 @@ class CreateItem extends Component {
   state = {
     title: "Much title",
     description: "Many wow",
-    image: "dog.jpg",
+    image: "",
     largeImage: "large-dog.jpg",
     price: 1000
   };
@@ -43,6 +43,28 @@ class CreateItem extends Component {
       return { [name]: val };
     });
   };
+
+  uploadFile= (async (e) => {
+    console.log('Uploading file')
+    const {files} = e.target;
+
+    const data = new FormData();
+    data.append('file', files[0])
+    data.append('upload_preset', 'sickfits')
+
+    const res = await fetch('https://api.cloudinary.com/v1_1/dnso6rdkr/image/upload', {
+      method:"post",
+      body: data,
+    })
+    
+    const file = await res.json();
+
+    console.log(file)
+
+    debugger
+    this.setState((state, props) => { return { image : file.secure_url, largeImage: file.eager[0].secure_url }})
+    
+  })
 
   render() {
     return (
@@ -68,6 +90,19 @@ class CreateItem extends Component {
               >
                 <ErrorMessage error={error}/>
                 <fieldset>
+                  <label htmlFor="file" className="htmlFor">
+                    File
+                    <input
+                      type="file"
+                      id="file"
+                      placeholder="Upload an image"
+                      name="file"
+                      onChange={this.uploadFile}
+                    />
+                  </label>
+                  {this.state.image && (
+                    <img width="200" src={this.state.image} alt="Upload Preview" />
+                  )}
                   <label htmlFor="title" className="htmlFor">
                     Title
                     <input
