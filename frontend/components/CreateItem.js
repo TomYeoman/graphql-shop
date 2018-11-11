@@ -60,6 +60,13 @@ class CreateItem extends Component {
 
     const file = await res.json();
 
+    if (file.error) {
+      this.setState((state, props) => ({
+        uploadError: file.error,
+      }));
+      return;
+    }
+
     this.setState((state, props) => ({
       image: file.secure_url,
       largeImage: file.eager[0].secure_url,
@@ -69,6 +76,9 @@ class CreateItem extends Component {
   render() {
     return (
       <div>
+        {this.state.uploadError && (
+          <ErrorMessage error={this.state.uploadError} />
+        )}
         <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
           {(createItem, { loading, error, called, data }) => (
             <Form
