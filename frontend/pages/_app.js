@@ -38,7 +38,7 @@ class MyApp extends App {
             <ApolloProvider client={this.props.apollo}>
               <Meta/>
               <Page>
-                <Component/>
+                <Component {...pageProps}/>
               </Page>
             </ApolloProvider>
           </Container>
