@@ -70,6 +70,7 @@ class CreateItem extends Component {
     this.setState((state, props) => ({
       image: file.secure_url,
       largeImage: file.eager[0].secure_url,
+      uploadError: null,
     }));
   };
 
