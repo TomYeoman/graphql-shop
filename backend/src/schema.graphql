@@ -41,6 +41,7 @@ type Query {
   fetchGlobalDogs: [Dog]!
   fetchItems: [Item]!
   # ITEMS
-  items: [Item]!
+  items(where: ItemWhereInput, orderBy:ItemOrderByInput, skip:Int, first: Int): [Item]!
   item(where: ItemWhereUniqueInput!): Item
+  itemsConnection(where: ItemWhereInput) : ItemConnection
 }

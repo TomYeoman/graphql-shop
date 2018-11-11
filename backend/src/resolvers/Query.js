@@ -6,7 +6,7 @@ const Query = {
   /**###########################
     # LOCAL       ##############
     ############################ */
-    
+
   fetchDogs(parent, args, context, info) {
     return [{ name: "Sam" }, { name: "Archie" }, { name: "Charlie" }];
   },
@@ -30,6 +30,7 @@ const Query = {
   },
   items: forwardTo('db'),
   item: forwardTo('db'),
+  itemsConnection: forwardTo('db'),
 };
 
 module.exports = Query;
