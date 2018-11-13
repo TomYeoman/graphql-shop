@@ -1,4 +1,6 @@
 const { forwardTo } = require("prisma-binding");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const Mutations = {
 
@@ -67,6 +69,33 @@ const Mutations = {
 
 
         return item;
+    },
+    async signup(parent, args, context, info) {
+        args.email = args.email.toLowerCase();
+        // Hash password ( 1 way hash )
+        const password = await bcrypt.hash(args.password, 10)
+        // Create the user in DB
+        const user =  await context.db.mutation.createUser(
+            {
+                data : {
+                    ...args,
+                    password,
+                    // Because permissions is an ENUM we must SET it
+                    permissions : {set : ['USER']}
+                }
+            }
+            ,info
+        );
+
+        // Create a JWT for them
+        const token = jwt.sign({userId : user.id}, process.env.APP_SECRET);
+        // Set it on the response
+        context.response.cookie('token', token, {
+            httpOnly : true,
+            maxAge : 1000 * 60 * 60 * 24 * 365
+        });
+
+        return user;
     },
 };
 

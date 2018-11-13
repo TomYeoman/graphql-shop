@@ -1,4 +1,6 @@
 // Access env variables
+const cookieParser = require("cookie-parser");
+
 require('dotenv').config({path : 'variables.env'})
 
 // import our graphql server setups
@@ -7,7 +9,10 @@ const db = require('./db')
 
 const server = createServer();
 
-// TODO use express middleware to handle cookies ( JWT )
+// This will run in between the request + response
+// We now have all cookies in a nice formatted object
+server.express.use(cookieParser())
+
 // TODO user express middleware to populate current user
 
 server.start({
