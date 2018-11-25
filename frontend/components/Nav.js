@@ -1,11 +1,18 @@
-import React, { Component } from 'react'
-import Link from 'next/link'
-import NavStyles from '../components/styles/NavStyles'
+import React, { Component } from 'react';
+import Link from 'next/link';
+import NavStyles from './styles/NavStyles';
+import User from './User';
 
 export default class Nav extends Component {
   render() {
     return (
       <NavStyles>
+        <User>
+          {({ data: { me } }) => {
+            console.log(me);
+            return <p>User</p>;
+          }}
+        </User>
         <Link href="/items">
           <a>Items</a>
         </Link>
@@ -22,6 +29,6 @@ export default class Nav extends Component {
           <a>Account</a>
         </Link>
       </NavStyles>
-    )
+    );
   }
 }

@@ -64,11 +64,6 @@ const Mutations = {
         // TODO
         // Delete it!
         return await context.db.mutation.deleteItem({ where }, info);
-
-        // We don't want to update the ID
-
-
-        return item;
     },
     async signup(parent, args, context, info) {
         args.email = args.email.toLowerCase();
