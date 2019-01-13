@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import Link from 'next/link';
 import NavStyles from './styles/NavStyles';
 import User from './User';
+import SignOut from './SignOut';
 
 export default class Nav extends Component {
   render() {
@@ -25,6 +26,7 @@ export default class Nav extends Component {
                   <Link href="/account">
                     <a>Account</a>
                   </Link>
+                  <SignOut />
                 </Fragment>
               );
             }

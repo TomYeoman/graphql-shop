@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { Query } from 'react-apollo';
-import styled from 'styled-components';
 import gql from 'graphql-tag';
+import styled from 'styled-components';
 import Item from './Item';
 import Pagination from './Pagination';
 import { perPage } from '../config';
-// Some people like to put queries into seperate folders + import it, Or we can locate the query from the file we want to do a query
 
 const ALL_ITEMS_QUERY = gql`
   query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    items (first:$first, skip:$skip, orderBy: createdAt_DESC) {
+    items(first: $first, skip: $skip, orderBy: createdAt_DESC) {
       id
       title
       price
       description
       image
+      largeImage
     }
   }
 `;
@@ -31,33 +31,35 @@ const ItemsList = styled.div`
   margin: 0 auto;
 `;
 
-export default class Items extends Component {
+class Items extends Component {
   render() {
-    const { page: currPage } = this.props;
-
     return (
       <Center>
-        <Pagination page={currPage} />
+        <Pagination page={this.props.page} />
         <Query
-          variables={{ skip: currPage * perPage - perPage, first: 4 }}
           query={ALL_ITEMS_QUERY}
+          // fetchPolicy="network-only"
+          variables={{
+            skip: this.props.page * perPage - perPage,
+          }}
         >
           {({ data, error, loading }) => {
-            if (loading) return <p>Loading</p>;
-            if (error) return <p>Error : {error.message}</p>;
+            if (loading) return <p>Loading...</p>;
+            if (error) return <p>Error: {error.message}</p>;
             return (
               <ItemsList>
                 {data.items.map(item => (
-                  <Item key={item.id} item={item} />
+                  <Item item={item} key={item.id} />
                 ))}
               </ItemsList>
             );
           }}
         </Query>
-        <Pagination page={currPage} />
+        <Pagination page={this.props.page} />
       </Center>
     );
   }
 }
 
+export default Items;
 export { ALL_ITEMS_QUERY };
