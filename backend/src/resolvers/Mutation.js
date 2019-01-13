@@ -14,7 +14,7 @@ const Mutations = {
     /**
      *
      * @param {*} parent
-     * @param {*} args
+     * @param {*} args - the body of the query / mutation
      * @param {*} context - Do we need headers, cookies etc? also covers DB
      * @param {*} info - Contains frontend information ( the query ), this is how we know what to return
      */
@@ -30,12 +30,23 @@ const Mutations = {
     # PRISMA       #############
     ############################ */
 
-    async createItem(parent, args, context, info) {
+    async createItem(parent, args, ctx, info) {
 
         // TODO - Check if logged in
-
-        const item = await context.db.mutation.createItem({
-            data : {...args}
+        if (!ctx.request.userId) {
+            throw new Error("You must be logged in to do this!")
+        }
+        console.log(ctx.request.userId)
+        const item = await ctx.db.mutation.createItem({
+            data : {
+                // This is how we create a relationship between the item and the user
+                user: {
+                    connect: {
+                        id: "123",
+                    }
+                },
+                ...args
+            }
         }, info);
 
         return item;

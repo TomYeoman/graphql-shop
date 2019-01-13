@@ -1,17 +1,28 @@
-import React, { Component } from "react";
-import Header from "./Header";
-// We can do theming etc within here
-import styled, { ThemeProvider, injectGlobal } from "styled-components";
+import React, { Component } from 'react';
+import styled, { ThemeProvider, injectGlobal } from 'styled-components';
+import Header from './Header';
+import Meta from './Meta';
 
-const commonTheme = {
-  red: "#FF0000",
-  black: "#393939",
-  grey: "#3A3A3A",
-  lightgrey: "#E1E1E1",
-  offWhite: "#EDEDED",
-  maxWidth: "1000px",
-  bs: "0 12px 24px 0 rgba(0, 0, 0, 0.09)"
+const theme = {
+  red: '#FF0000',
+  black: '#393939',
+  grey: '#3A3A3A',
+  lightgrey: '#E1E1E1',
+  offWhite: '#EDEDED',
+  maxWidth: '1000px',
+  bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
 };
+
+const StyledPage = styled.div`
+  background: white;
+  color: ${props => props.theme.black};
+`;
+
+const Inner = styled.div`
+  max-width: ${props => props.theme.maxWidth};
+  margin: 0 auto;
+  padding: 2rem;
+`;
 
 injectGlobal`
   @font-face {
@@ -36,41 +47,23 @@ injectGlobal`
   }
   a {
     text-decoration: none;
-    color: ${commonTheme.black};
+    color: ${theme.black};
   }
   button {  font-family: 'radnika_next'; }
 `;
 
-const lightTheme = {
-  ...commonTheme,
-  background: "#fff"
-};
-
-const darkTheme = {
-  ...commonTheme,
-  background: "#000"
-};
-
-const Inner = styled.div`
-  max-width: ${props => props.theme.maxWidth};
-`;
-
-const StyledPage = styled.div`
-  background-color: ${props => props.theme.background};
-  color: ${props => props.theme.textColor};
-`;
-
-export default class Page extends Component {
+class Page extends Component {
   render() {
     return (
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={theme}>
         <StyledPage>
-          {/* Nav / Search etc */}
+          <Meta />
           <Header />
-          {/* Product */}
           <Inner>{this.props.children}</Inner>
         </StyledPage>
       </ThemeProvider>
     );
   }
 }
+
+export default Page;
