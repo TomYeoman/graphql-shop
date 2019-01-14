@@ -42,7 +42,7 @@ const Mutations = {
                 // This is how we create a relationship between the item and the user
                 user: {
                     connect: {
-                        id: "123",
+                        id: ctx.request.userId,
                     }
                 },
                 ...args
