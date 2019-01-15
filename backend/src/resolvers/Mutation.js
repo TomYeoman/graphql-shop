@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const { transport, makeANiceEmail } = require('../mail')
+const { isValidUser, hasPermission } = require('../utils')
 
 const Mutations = {
 
@@ -205,6 +206,29 @@ const Mutations = {
 
         // Return the user
         return user;
+    },
+    async updatePermissions(parent, { permissions, userId }, ctx, info) {
+        // Check if we're a valid user
+        isValidUser(ctx);
+
+        // Check we have permission
+        hasPermission(ctx.request.user, ['ADMIN', 'PERMISSIONUPDATE'])
+
+        // Update the user with new permissions
+
+        return ctx.db.mutation.updateUser(
+            {
+                data : {
+                    permissions : {
+                        set : permissions,
+                    }
+                },
+                where : {
+                    id : userId
+                }
+            },
+            info
+        )
     },
 };
 
