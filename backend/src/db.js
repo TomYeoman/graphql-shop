@@ -10,7 +10,7 @@ const db = new Prisma({
     endpoint : process.env.PRISMA_ENDPOINT,
     // This is the "password" to our database we use in production
     secret : process.env.PRISMA_SECRET,
-    debug : true
+    debug : false
 });
 
 module.exports = db;

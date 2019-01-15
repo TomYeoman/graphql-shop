@@ -14,7 +14,7 @@ const server = createServer();
 // We now have all cookies in a nice formatted object
 server.express.use(cookieParser())
 
-// TODO user express middleware to populate current user
+// USer express middleware to populate current user
 server.express.use((req,res,next) => {
     const {token} = req.cookies;
 
@@ -22,6 +22,21 @@ server.express.use((req,res,next) => {
         const {userId} = jwt.verify(token, process.env.APP_SECRET);
         req.userId = userId;
     }
+    next();
+})
+
+// User express middleware to populate permissions
+server.express.use(async (req,res,next) => {
+    if(!req.userId) return next();
+    const user = await db.query.user(
+        {where: { id : req.userId}},
+      '{id, permissions, email, name}',
+    );
+
+    console.log(user)
+
+    req.user = user;
+
     next();
 })
 

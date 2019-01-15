@@ -1,5 +1,6 @@
 const { forwardTo } = require("prisma-binding");
-
+const { NOT_LOGGED_IN_MESSAGE} = require('../../constants')
+const { hasPermission, isValidUser } = require('../utils')
 console.log(forwardTo)
 
 const Query = {
@@ -41,6 +42,22 @@ const Query = {
         where : {id: context.request.userId}
       }, info)
     }
+  },
+  async users(parent, args, ctx, info) {
+    // Check if user has permissions to do this
+    if (!ctx.request.userId) {
+      return new Error(NOT_LOGGED_IN_MESSAGE)
+    }
+
+    // Check they are allowed to perform this action
+    isValidUser(ctx)
+    hasPermission(ctx.request.user, ['ADMIN', 'PERMISSIONUPDATE'])
+
+    // If they do query all the users!
+    return ctx.db.query.users({
+      where: {}
+    }, info)
+
   },
 };
 
