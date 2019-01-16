@@ -67,18 +67,27 @@ const Mutations = {
 
         return item;
     },
-    async deleteItem(parent, args, context, info) {
+    async deleteItem(parent, args, ctx, info) {
 
-        const where = {id : args.id};
+        // Check we're logged in
+        isValidUser(ctx);
+
+        const where = { id: args.id }
 
         // Find item
-        const item = await context.db.query.item({ where}, `{ id, title}`);
+        const item = await ctx.db.query.item({ where}, `{ id, title, user { id }}`);
+        console.log(item)
+        // Check whether we own the item
+        const ownsItem = item.user.id === ctx.request.userId;
+        // If we're an admin / are allowed to delete ( do this as our helper throws )
+        const hasPermissions = ctx.request.user.permissions.some(permission => ['ADMIN', 'ITEMDELETE'].includes(permission))
 
-        console.log(item);
-        // Check whether they own it / have permissions
-        // TODO
+        if (!ownsItem || !hasPermission) {
+            throw new Error("You don't have permission to delete an item!")
+        }
+
         // Delete it!
-        return await context.db.mutation.deleteItem({ where }, info);
+        return await ctx.db.mutation.deleteItem({ where }, info);
     },
     async signup(parent, args, context, info) {
         args.email = args.email.toLowerCase();

@@ -12,3 +12,4 @@ What we need to do is
 On the client we will
 
 - Modify the `UserPermissions` component to call the mutation whenever the click the `update` button within the table with our latest permission list
+
