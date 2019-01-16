@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import NProgress from 'nprogress';
 import Router from 'next/router';
 import Nav from './Nav';
-// import Cart from './Cart';
+import Cart from './Cart';
 // import Search from './Search';
 
 Router.onRouteChangeStart = () => {
@@ -70,7 +70,7 @@ const Header = () => (
       Search
     </div>
     {/* <Cart /> */}
-    Cart
+    <Cart />
   </StyledHeader>
 );
 

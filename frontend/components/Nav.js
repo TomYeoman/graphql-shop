@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import Link from 'next/link';
+import { Mutation } from 'react-apollo';
 import NavStyles from './styles/NavStyles';
 import User from './User';
 import SignOut from './SignOut';
+import { LOCAL_STATE_MUTATION } from './Cart';
 
 export default class Nav extends Component {
   render() {
@@ -27,6 +29,9 @@ export default class Nav extends Component {
                     <a>Account</a>
                   </Link>
                   <SignOut />
+                  <Mutation mutation={LOCAL_STATE_MUTATION}>
+                    {toggleCart => <button onClick={toggleCart}>Cart</button>}
+                  </Mutation>
                 </Fragment>
               );
             }
