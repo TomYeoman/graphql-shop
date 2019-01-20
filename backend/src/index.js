@@ -33,8 +33,6 @@ server.express.use(async (req,res,next) => {
       '{id, permissions, email, name}',
     );
 
-    console.log(user)
-
     req.user = user;
 
     next();

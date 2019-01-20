@@ -20,7 +20,6 @@ const Mutations = {
      * @param {*} info - Contains frontend information ( the query ), this is how we know what to return
      */
     createDog(parent, args, context, info) {
-        console.log(args)
         global.dogs = global.dogs || [];
         const newDog = {name : args.name};
         global.dogs.push(newDog)
@@ -37,7 +36,6 @@ const Mutations = {
         if (!ctx.request.userId) {
             throw new Error("You must be logged in to do this!")
         }
-        console.log(ctx.request.userId)
         const item = await ctx.db.mutation.createItem({
             data : {
                 // This is how we create a relationship between the item and the user
@@ -76,7 +74,6 @@ const Mutations = {
 
         // Find item
         const item = await ctx.db.query.item({ where}, `{ id, title, user { id }}`);
-        console.log(item)
         // Check whether we own the item
         const ownsItem = item.user.id === ctx.request.userId;
         // If we're an admin / are allowed to delete ( do this as our helper throws )
@@ -253,7 +250,6 @@ const Mutations = {
             }
         },info )
 
-        console.log(existingCartItem)
         // Check if the cart is already added then increment it
         if (existingCartItem) {
             console.log('This item is already in their cart!')

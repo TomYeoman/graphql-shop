@@ -15,6 +15,13 @@ export default class Nav extends Component {
         </Link>
         <User>
           {({ data: { me } }) => {
+            if (!me) {
+              return (
+                <Link href="/signup">
+                  <a>Sign in</a>
+                </Link>
+              );
+            }
             if (me) {
               // return <p>{me.name}</p>;
               return (
